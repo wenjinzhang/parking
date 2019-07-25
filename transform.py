@@ -3,25 +3,26 @@ import argparse
 import cv2
 import operator
 import os
-from segmentHelper/transform_helper import grouper
-from segmentHelper/transform_helper import partition
-from segmentHelper/transform_helper import quickSort
-from segmentHelper/transform_helper import rgb_mask
+from transform_helper import grouper
+from transform_helper import partition
+from transform_helper import quickSort
+from transform_helper import rgb_mask
  
 '''
 split creates horizontal.npy and vertical.npy which are the vertical and horizontal arrays of lines
 that define the parking lot
-image should be image string
+imagestr should be image string
 row is the number of rows in the image
 column is the number of columns in the image
 '''
-def split(image, row, column):
+def split(imagestr, row, column):
+    image = cv2.imread(imagestr)
     mask = rgb_mask(image)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     gray_mask = cv2.cvtColor(mask, cv2.COLOR_RGB2GRAY)
     gaus = cv2.GaussianBlur(gray_mask, (9, 9), 0)
     canny = cv2.Canny(gaus,50,100)
-    hough = cv2.HoughLinesP(canny, rho=1, theta=np.pi / 180, threshold=15, minLineLength=10, maxLineGap=12)
+    hough = cv2.HoughLinesP(canny, rho=1, theta=np.pi / 180, threshold=15, minLineLength=15, maxLineGap=12)
     houghPic = np.copy(mask)
     # draw hough lines onto picture
     for line in hough:
@@ -69,7 +70,7 @@ def split(image, row, column):
 
     # constant definition
     height, width, channels = image.shape
-    horizontal_cluster_size = int((height / row) / 10)
+    horizontal_cluster_size = int((height / row) / 8)
     vertical_cluster_size = int((width / column) / 5)
     endpoint_cluster_size = int((height / row) / 8)
     horizontal_merger_constant = int((width / column) / 5)
@@ -141,8 +142,8 @@ def split(image, row, column):
     #         cv2.imwrite("./segment/"+"{:04d}".format(x/2) + "_" + "{:04d}".format(y) + '.jpg', \
     #                 image[keys_horizontal[x]-buffer: keys_horizontal[x+1]+buffer, keys_vert[y]-buffer:keys_vert[y+1]]+buffer)
 
-    np.save("vertical", keys_vert)
-    np.save("horizontal", keys_horizontal)
+    np.save("setupData/vertical", keys_vert)
+    np.save("setupData/horizontal", keys_horizontal)
     # print("vert: ")
     # print(keys_vert)
     # print("horizontal: ")

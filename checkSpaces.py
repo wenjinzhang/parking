@@ -14,8 +14,8 @@ def checkSpaces(rawimage):
     # keys_horizontal = data[1].strip().split(" ")
     # keys_vert = [int(x) for x in keys_vert]
     # keys_horizontal = [int(x) for x in keys_horizontal]
-    keys_vert = np.load("vertical.npy")
-    keys_horizontal = np.load("horizontal.npy")
+    keys_vert = np.load("setupData/vertical.npy")
+    keys_horizontal = np.load("setupData/horizontal.npy")
     
     buffer = 0
     # save segmented pictures
