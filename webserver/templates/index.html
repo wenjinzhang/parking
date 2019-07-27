@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulator</title>
+</head>
+<body>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.js"
+  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+  crossorigin="anonymous"></script>
+<script>
+    function reload(){
+         $("#play").attr('src','static/play.jpg?t='+Math.random());
+    }
+    setInterval(reload, 1000);
+</script>
+<div style="text-align: center">
+    <h1 style="margin-top: 5%">Simulator</h1>
+    <img id = "play" src="static/play.jpg" alt="play the video" >
+</div>
+</body>
+</html>
