@@ -13,7 +13,7 @@ def index():
 
 
 def main():
-    split("./static/play2.jpg", 7, 17)
+    split("./static/play2.jpg", 4, 17)
     checkSpaces("./static/play2.jpg")
 
 

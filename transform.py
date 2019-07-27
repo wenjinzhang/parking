@@ -166,15 +166,15 @@ def split(imagestr, row, column):
 
     ################################## display and save ############################
     # show pictures
-    cv2.imshow("Original", image)
-    cv2.imshow("Masked", mask)
-    cv2.imshow("Gray", gray)
-    cv2.imshow("Masked Grayscale", gray_mask)
-    cv2.imshow('Guas', gaus)
-    cv2.imshow("Canny", canny)
-    cv2.imshow("Hough", houghPic)
-    cv2.imshow("Horizontal", horizPic)
-    cv2.imshow("Vertical", vertPic)
+    # cv2.imshow("Original", image)
+    # cv2.imshow("Masked", mask)
+    # cv2.imshow("Gray", gray)
+    # cv2.imshow("Masked Grayscale", gray_mask)
+    # cv2.imshow('Guas', gaus)
+    # cv2.imshow("Canny", canny)
+    # cv2.imshow("Hough", houghPic)
+    # cv2.imshow("Horizontal", horizPic)
+    # cv2.imshow("Vertical", vertPic)
     # cv2.imshow("Grid", grid)
 
     cv2.waitKey(0)
