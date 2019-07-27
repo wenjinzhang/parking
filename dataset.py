@@ -13,18 +13,16 @@ def get_data_gen():
         rotation_range=5)
 
 
-def get_data(batch_size=32, image_shape=(48, 48), train_data_dir="train_data/train", validation_data_dir="train_data/test"):
+def get_data(batch_size=32, image_shape=(48, 48), train_data_dir="./train_data/train", validation_data_dir="./train_data/test"):
     files_train = 0
     files_validation = 0
 
-    folder = 'train_data/train'
-    for sub_folder in os.listdir(folder):
-        path, dirs, files = next(os.walk(os.path.join(folder, sub_folder)))
+    for sub_folder in os.listdir(train_data_dir):
+        path, dirs, files = next(os.walk(os.path.join(train_data_dir, sub_folder)))
         files_train += len(files)
 
-    folder = 'train_data/test'
-    for sub_folder in os.listdir(folder):
-        path, dirs, files = next(os.walk(os.path.join(folder, sub_folder)))
+    for sub_folder in os.listdir(validation_data_dir):
+        path, dirs, files = next(os.walk(os.path.join(validation_data_dir, sub_folder)))
         files_validation += len(files)
 
     print(files_train, files_validation)

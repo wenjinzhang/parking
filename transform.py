@@ -72,7 +72,7 @@ def split(imagestr, row, column):
     height, width, channels = image.shape
     horizontal_cluster_size = int((height / row) / 8)
     vertical_cluster_size = int((width / column) / 5)
-    endpoint_cluster_size = int((height / row) / 8)
+    endpoint_cluster_size = int((height / row) / 6)
     horizontal_merger_constant = int((width / column) / 5)
 
     # order value translation:
@@ -83,34 +83,35 @@ def split(imagestr, row, column):
     # horizontal groups
     clusters_hori = grouper(horizontal, horizontal_cluster_size, 1)
     keys_hori = []
-    [keys_hori.append(sum(x) / len(x)) for x in clusters_hori]
+    [keys_hori.append(int(sum(x) / len(x))) for x in clusters_hori]
 
     # vertical groups:
     clusters_vert = grouper(vertical, vertical_cluster_size, 0)
     keys_vert = []
-    [keys_vert.append(sum(x) / len(x)) for x in clusters_vert]
+    [keys_vert.append(int(sum(x) / len(x))) for x in clusters_vert]
 
     # endpoints groups
     clusters_end = []
     for y in vertical_endpoints:
+
         if len(clusters_end) == 0:
-            clusters_end.append([y])
+            clusters_end.append([int(y)])
         else:
             total = 0
             for x in clusters_end[len(clusters_end)-1]:
                 total+=x
             avg = total / len(clusters_end[len(clusters_end)-1])
-            if y - avg <= endpoint_cluster_size:
-                clusters_end[len(clusters_end)-1].append(y)
+            if int(y) - avg <= endpoint_cluster_size:
+                clusters_end[len(clusters_end)-1].append(int(y))
             else:
-                clusters_end.append([y])
+                clusters_end.append([int(y)])
     keys_end = []
     for item in clusters_end:
         if not len(item) <= 8: 
             total = 0
             for x in item:
                 total+=x
-            keys_end.append(total/len(item))
+            keys_end.append(int(total/len(item)))
 
     # combine endpoints and horizontal lines to more robustly find horizontal lines
     keys_horizontal = []
@@ -142,8 +143,8 @@ def split(imagestr, row, column):
     #         cv2.imwrite("./segment/"+"{:04d}".format(x/2) + "_" + "{:04d}".format(y) + '.jpg', \
     #                 image[keys_horizontal[x]-buffer: keys_horizontal[x+1]+buffer, keys_vert[y]-buffer:keys_vert[y+1]]+buffer)
 
-    np.save("setupData/vertical", keys_vert)
-    np.save("setupData/horizontal", keys_horizontal)
+    np.save("../setupData/horizontal.npy", keys_vert)
+    np.save("../setupData/vertical.npy", keys_horizontal)
     # print("vert: ")
     # print(keys_vert)
     # print("horizontal: ")
@@ -165,15 +166,15 @@ def split(imagestr, row, column):
 
     ################################## display and save ############################
     # show pictures
-    # cv2.imshow("Original", image)
-    # cv2.imshow("Masked", mask)
-    # cv2.imshow("Gray", gray)
-    # cv2.imshow("Masked Grayscale", gray_mask)
-    # cv2.imshow('Guas', gaus)
-    # cv2.imshow("Canny", canny)
-    # cv2.imshow("Hough", houghPic)
-    # cv2.imshow("Horizontal", horizPic)
-    # cv2.imshow("Vertical", vertPic)
+    cv2.imshow("Original", image)
+    cv2.imshow("Masked", mask)
+    cv2.imshow("Gray", gray)
+    cv2.imshow("Masked Grayscale", gray_mask)
+    cv2.imshow('Guas', gaus)
+    cv2.imshow("Canny", canny)
+    cv2.imshow("Hough", houghPic)
+    cv2.imshow("Horizontal", horizPic)
+    cv2.imshow("Vertical", vertPic)
     # cv2.imshow("Grid", grid)
 
-    # cv2.waitKey(0)
+    cv2.waitKey(0)
