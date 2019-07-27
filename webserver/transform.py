@@ -143,8 +143,8 @@ def split(imagestr, row, column):
     #         cv2.imwrite("./segment/"+"{:04d}".format(x/2) + "_" + "{:04d}".format(y) + '.jpg', \
     #                 image[keys_horizontal[x]-buffer: keys_horizontal[x+1]+buffer, keys_vert[y]-buffer:keys_vert[y+1]]+buffer)
 
-    np.save("../setupData/horizontal.npy", keys_vert)
-    np.save("../setupData/vertical.npy", keys_horizontal)
+    np.save("../setupData/vertical.npy", keys_vert)
+    np.save("../setupData/horizontal.npy", keys_horizontal)
     print("vert: ")
     print(keys_vert)
     print("horizontal: ")
