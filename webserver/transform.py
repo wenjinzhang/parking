@@ -155,21 +155,21 @@ def split(imagestr, row, column):
 
     np.save("../setupData/vertical.npy", keys_vert)
     np.save("../setupData/horizontal.npy", keys_horizontal)
-    print("vert: ")
-    print(keys_vert)
-    print("horizontal: ")
-    print(keys_horizontal)
-    print("hori: ")
-    print(keys_hori)
-    print("end: ")
-    print(keys_end)
+    # print("vert: ")
+    # print(keys_vert)
+    # print("horizontal: ")
+    # print(keys_horizontal)
+    # print("hori: ")
+    # print(keys_hori)
+    # print("end: ")
+    # print(keys_end)
 
-    # graph lines onto a picture
-    grid = np.copy(image)
-    for x in keys_vert:
-        cv2.line(grid,(x,0),(x,height),(255,0,0),3)
-    for x in keys_horizontal:
-        cv2.line(grid,(0,x),(width,x),(0,255,0),3)
+    # # graph lines onto a picture
+    # grid = np.copy(image)
+    # for x in keys_vert:
+    #     cv2.line(grid,(x,0),(x,height),(255,0,0),3)
+    # for x in keys_horizontal:
+    #     cv2.line(grid,(0,x),(width,x),(0,255,0),3)
     
     
 
@@ -185,6 +185,6 @@ def split(imagestr, row, column):
     # cv2.imshow("Hough", houghPic)
     # cv2.imshow("Horizontal", horizPic)
     # cv2.imshow("Vertical", vertPic)
-    cv2.imshow("Grid", grid)
+    # cv2.imshow("Grid", grid)
 
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
