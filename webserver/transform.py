@@ -70,10 +70,12 @@ def split(imagestr, row, column):
 
     # constant definition
     height, width, channels = image.shape
+    print(height)
     horizontal_cluster_size = int((height / row) / 8)
     vertical_cluster_size = int((width / column) / 5)
     endpoint_cluster_size = int((height / row) / 6)
     horizontal_merger_constant = int((width / column) / 5)
+    upperShiftConstant = int(height/row/8)
 
     # order value translation:
     # 0 - x1,
@@ -134,6 +136,14 @@ def split(imagestr, row, column):
     if counter_hori < len(keys_hori):
         for x in range(counter_hori, len(keys_hori)):
             keys_horizontal.append(keys_hori[x])
+
+    # upper horizontal line shit to account for 3D cars
+    for index in range(len(keys_horizontal)):
+        if index % 2 == 0:
+            if keys_horizontal[index] >= upperShiftConstant:
+                keys_horizontal[index] -= upperShiftConstant
+            else:
+                keys_horizontal[index] = 0
 
     # save segmented pictures
     # if not os.path.exists("./segment"):
