@@ -7,7 +7,7 @@ from transform_helper import grouper
 from transform_helper import partition
 from transform_helper import quickSort
 from transform_helper import rgb_mask
- 
+
 '''
 split creates horizontal.npy and vertical.npy which are the vertical and horizontal arrays of lines
 that define the parking lot
@@ -54,13 +54,13 @@ def split(imagestr, row, column):
         x1, y1, x2, y2 = line[0]
         cv2.line(horizPic, (x1, y1), (x2, y2), (0, 255, 0), 3)
 
-    # sorts vertical in order of increasing x cord and 
+    # sorts vertical in order of increasing x cord and
     # horizontal in order of increasing y cord
     quickSort(vertical, 0, len(vertical)-1, 0)
     quickSort(horizontal, 0, len(horizontal)-1, 1)
 
-    # sort endpoints of vertical lines which will be used to find 
-    # more horizontal lines 
+    # sort endpoints of vertical lines which will be used to find
+    # more horizontal lines
     vertical_endpoints = []
     for line in vertical:
         x1, y1, x2, y2 = line[0]
@@ -70,10 +70,12 @@ def split(imagestr, row, column):
 
     # constant definition
     height, width, channels = image.shape
+    print(height)
     horizontal_cluster_size = int((height / row) / 8)
     vertical_cluster_size = int((width / column) / 5)
     endpoint_cluster_size = int((height / row) / 6)
     horizontal_merger_constant = int((width / column) / 5)
+    upperShiftConstant = int(height/row/8)
 
     # order value translation:
     # 0 - x1,
@@ -107,7 +109,7 @@ def split(imagestr, row, column):
                 clusters_end.append([int(y)])
     keys_end = []
     for item in clusters_end:
-        if not len(item) <= 8: 
+        if not len(item) <= 8:
             total = 0
             for x in item:
                 total+=x
@@ -135,6 +137,14 @@ def split(imagestr, row, column):
         for x in range(counter_hori, len(keys_hori)):
             keys_horizontal.append(keys_hori[x])
 
+    # upper horizontal line shit to account for 3D cars
+    for index in range(len(keys_horizontal)):
+        if index % 2 == 0:
+            if keys_horizontal[index] >= upperShiftConstant:
+                keys_horizontal[index] -= upperShiftConstant
+            else:
+                keys_horizontal[index] = 0
+
     # save segmented pictures
     # if not os.path.exists("./segment"):
     #     os.mkdir("./segment")
@@ -145,23 +155,23 @@ def split(imagestr, row, column):
 
     np.save("../setupData/vertical.npy", keys_vert)
     np.save("../setupData/horizontal.npy", keys_horizontal)
-    print("vert: ")
-    print(keys_vert)
-    print("horizontal: ")
-    print(keys_horizontal)
-    print("hori: ")
-    print(keys_hori)
-    print("end: ")
-    print(keys_end)
+    # print("vert: ")
+    # print(keys_vert)
+    # print("horizontal: ")
+    # print(keys_horizontal)
+    # print("hori: ")
+    # print(keys_hori)
+    # print("end: ")
+    # print(keys_end)
 
-    # graph lines onto a picture
-    grid = np.copy(image)
-    for x in keys_vert:
-        cv2.line(grid,(x,0),(x,height),(255,0,0),3)
-    for x in keys_horizontal:
-        cv2.line(grid,(0,x),(width,x),(0,255,0),3)
-    
-    
+    # # graph lines onto a picture
+    # grid = np.copy(image)
+    # for x in keys_vert:
+    #     cv2.line(grid,(x,0),(x,height),(255,0,0),3)
+    # for x in keys_horizontal:
+    #     cv2.line(grid,(0,x),(width,x),(0,255,0),3)
+
+
 
 
     ################################## display and save ############################
