@@ -12,12 +12,14 @@
 <script>
     function reload(){
          $("#play").attr('src','static/play.jpg?t='+Math.random());
+         $("#detect").attr('src','static/detect.jpg?t='+Math.random());
     }
     setInterval(reload, 1000);
 </script>
 <div style="text-align: center">
-    <h1 style="margin-top: 5%">Simulator</h1>
+    <h1>Simulator</h1>
     <img id = "play" src="static/play.jpg" alt="play the video" >
+    <img id = "detect" src="static/detect.jpg" alt="play the video" >
 </div>
 </body>
 </html>

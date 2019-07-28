@@ -175,6 +175,6 @@ def split(imagestr, row, column):
     # cv2.imshow("Hough", houghPic)
     # cv2.imshow("Horizontal", horizPic)
     # cv2.imshow("Vertical", vertPic)
-    cv2.imshow("Grid", grid)
-
-    cv2.waitKey(0)
+    # cv2.imshow("Grid", grid)
+    #
+    # cv2.waitKey(0)

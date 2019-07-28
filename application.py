@@ -6,7 +6,7 @@ from keras.preprocessing import image
 from PIL import Image
 
 def get_image_array(filename):
-    print(filename)
+    # print(filename)
     img = image.load_img(
         filename,
         grayscale=False,
@@ -22,9 +22,10 @@ epochs = 15
 num_classes = 2
 image_shape = (48, 48)
 
+
 # build model
 model_final = model.model((48, 48, 3), num_classes)
-model_final.load_weights("car1.h5", by_name=True)
+model_final.load_weights("../car1.h5", by_name=True)
 data_generate = dataset.get_data_gen()
 
 
