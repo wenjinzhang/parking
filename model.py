@@ -1,7 +1,19 @@
-from keras import applications
-from keras import optimizers
+from keras import applications, optimizers
 from keras.models import Model
-from keras.layers import Flatten, Dense
+from keras.layers import Flatten, Dense, Input, Conv2D
+
+
+def model_cnn(input_shape=(48, 48, 3), num_classes=2):
+    x = Input(shape=input_shape)
+    x = Conv2D(32, kernel_size=(3, 3),
+               activation='relu',
+               input_shape=input_shape)(x)
+    x = Conv2D(64, (3, 3), activation='relu')(x)
+    x = Conv2D(128, (3, 3), activation='relu')(x)
+    Flatten()(x)
+    Dense(128, activation='relu')
+    Dense(num_classes, activation='softmax')
+    return model
 
 
 def model(input_shape=(48, 48, 3), num_classes=2):
@@ -24,9 +36,6 @@ def model(input_shape=(48, 48, 3), num_classes=2):
     # compile the model
     model_final.compile(loss="categorical_crossentropy",
                         optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
-                        metrics=["accuracy"])  # See learning rate is very low
+                        metrics=["accuracy"])
 
     return model_final
-
-
-
