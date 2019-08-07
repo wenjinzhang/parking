@@ -15,7 +15,7 @@ nb_train_samples, nb_validation_samples, train_generator, validation_generator =
 
 
 # build model
-model_final = model.model((48, 48, 3), num_classes)
+model_final = model.model_cnn((48, 48, 3), num_classes)
 
 # model_final.load_weights("car1.h5", by_name=True)
 # Save the model according to the conditions
@@ -24,7 +24,7 @@ checkpoint = ModelCheckpoint("car1_2.h5", monitor='val_acc', verbose=1, save_bes
 
 early = EarlyStopping(monitor='val_acc', min_delta=0, patience=10, verbose=1, mode='auto')
 
-tensor_board = TensorBoard(log_dir="logs/PUC/Rainy", histogram_freq=0, batch_size=32, update_freq='batch')
+tensor_board = TensorBoard(log_dir="logs_cnn/PUC/Cloudy", histogram_freq=0, batch_size=32, update_freq='batch')
 
 # Start training!
 history_object = model_final.fit_generator(
