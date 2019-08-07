@@ -5,6 +5,8 @@ from checkSpaces import checkSpaces
 from application import prediction
 import numpy as np
 import cv2
+import shutil
+
 
 def show_detect(array_path_prefix=".", prediction_result=[], orginal_img_path= "./static/play.jpg"):
     vertical = np.load("{}/vertical.npy".format(array_path_prefix), mmap_mode=None, allow_pickle=True, fix_imports=True, encoding='ASCII')
@@ -43,6 +45,8 @@ def play_video(video_name):
         checkSpaces("./static/play.jpg")
         result = prediction("./segment")
         show_detect("../setupData", result)
+        log_path = "./log/{}".format(time.time())
+        shutil.copytree("./segment", log_path)
         time.sleep(2)
 
 def simulator():

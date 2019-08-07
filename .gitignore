@@ -8,3 +8,4 @@ testImages/*
 testvideo/*
 webserver/segment/*
 
+*.zip
