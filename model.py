@@ -4,16 +4,21 @@ from keras.layers import Flatten, Dense, Input, Conv2D
 
 
 def model_cnn(input_shape=(48, 48, 3), num_classes=2):
-    x = Input(shape=input_shape)
+    input = Input(shape=input_shape)
     x = Conv2D(32, kernel_size=(3, 3),
                activation='relu',
-               input_shape=input_shape)(x)
+               input_shape=input_shape)(input)
     x = Conv2D(64, (3, 3), activation='relu')(x)
     x = Conv2D(128, (3, 3), activation='relu')(x)
-    Flatten()(x)
-    Dense(128, activation='relu')
-    Dense(num_classes, activation='softmax')
-    return model
+    x = Flatten()(x)
+    x = Dense(128, activation='relu')(x)
+    x = Dense(num_classes, activation='softmax')(x)
+    # creating the final model
+    model_final = Model(inputs=input, outputs=x)
+    model_final.compile(loss="categorical_crossentropy",
+                        optimizer=optimizers.SGD(lr=0.0001, momentum=0.9),
+                        metrics=["accuracy"])
+    return model_final
 
 
 def model(input_shape=(48, 48, 3), num_classes=2):
