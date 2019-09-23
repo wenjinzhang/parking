@@ -24,7 +24,10 @@ checkpoint = ModelCheckpoint("car1_2.h5", monitor='val_acc', verbose=1, save_bes
 
 early = EarlyStopping(monitor='val_acc', min_delta=0, patience=10, verbose=1, mode='auto')
 
-tensor_board = TensorBoard(log_dir="logs/UFPR04/Sunny", histogram_freq=0, batch_size=32, update_freq='batch')
+
+
+tensor_board = TensorBoard(log_dir="logs/UFPR04/Rainy", histogram_freq=0, batch_size=32, update_freq='batch')
+
 
 # Start training!
 history_object = model_final.fit_generator(
